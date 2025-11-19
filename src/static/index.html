@@ -55,20 +55,27 @@
         Object.entries(activities).forEach(([name, info]) => {
           const card = document.createElement('div');
           card.className = 'activity-card';
-          card.innerHTML = `
-            <h4>${name}</h4>
-            <p>${info.description}</p>
-            <p><strong>Schedule:</strong> ${info.schedule}</p>
-            <p><strong>Max Participants:</strong> ${info.max_participants}</p>
-            <div class="participants-section">
-              <strong>Participants:</strong>
-              <ul class="participants-list">
-                ${info.participants.length > 0
-                  ? info.participants.map(email => `<li>${email}</li>`).join('')
-                  : '<li class="no-participants">No participants yet</li>'}
-              </ul>
-            </div>
-          `;
+            card.innerHTML = `
+              <h4>${name}</h4>
+              <p>${info.description}</p>
+              <p><strong>Schedule:</strong> ${info.schedule}</p>
+              <p><strong>Max Participants:</strong> ${info.max_participants}</p>
+              <div class="participants-section">
+                <strong>Participants:</strong>
+                <ul class="participants-list" style="list-style-type: none; margin-left: 0;">
+                  ${info.participants.length > 0
+                    ? info.participants.map(email => `
+                        <li style="display: flex; align-items: center; gap: 8px;">
+                          <span>${email}</span>
+                          <button class="delete-participant" title="Eliminar" data-activity="${name}" data-email="${email}" style="background: none; border: none; color: #c62828; cursor: pointer; font-size: 18px; padding: 0;">
+                            &#128465;
+                          </button>
+                        </li>
+                      `).join('')
+                    : '<li class="no-participants">No participants yet</li>'}
+                </ul>
+              </div>
+            `;
           activitiesList.appendChild(card);
         });
 
